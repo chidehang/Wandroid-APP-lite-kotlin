@@ -73,7 +73,7 @@ open class BaseRecyclerAdapter<T>(
      * 获取item视图类型
      * 子类可以重写该方法返回多视图类型
      */
-    fun getItemViewType(position: Int, item: T): Int {
+    open fun getItemViewType(position: Int, item: T): Int {
         return VIEW_TYPE_DEFAULT
     }
 
@@ -137,6 +137,10 @@ open class BaseRecyclerAdapter<T>(
             item: T,
             position: Int
         )
+    }
+
+    fun clearData() {
+        mData?.clear()
     }
 
     fun release() {

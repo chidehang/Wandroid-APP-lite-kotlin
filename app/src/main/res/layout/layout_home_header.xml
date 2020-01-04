@@ -37,7 +37,6 @@
 
     <com.bigkoo.convenientbanner.ConvenientBanner
         android:id="@+id/cb_home_banner"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/margin_common"

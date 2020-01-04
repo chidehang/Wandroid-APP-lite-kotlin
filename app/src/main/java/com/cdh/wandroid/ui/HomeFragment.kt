@@ -16,6 +16,7 @@ import com.cdh.wandroid.model.bean.ArticleBean
 import com.cdh.wandroid.model.bean.BannerBean
 import com.cdh.wandroid.ui.adapter.ArticleListAdapter
 import com.cdh.wandroid.ui.adapter.BannerImageHolderView
+import com.cdh.wandroid.ui.adapter.base.BaseRecyclerAdapter
 import com.cdh.wandroid.ui.widget.refresh.OnLoadMoreListener
 import com.cdh.wandroid.ui.widget.refresh.setRefreshListener
 
@@ -46,12 +47,12 @@ class HomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        mBinding.cbHomeBanner.startTurning(2000)
+//        mBinding.cbHomeBanner.startTurning(2000)
     }
 
     override fun onStop() {
         super.onStop()
-        mBinding.cbHomeBanner.stopTurning()
+//        mBinding.cbHomeBanner.stopTurning()
     }
 
     private fun initView() {
@@ -72,12 +73,9 @@ class HomeFragment : Fragment() {
             mBinding.swipeRefreshHome.isRefreshing = enable
         }
 
-        mViewModel.observeBanners(activity!!) { banners ->
-            if (banners == null || banners.isEmpty()) {
-                mBinding.cbHomeBanner.visibility = View.GONE
-            } else {
-                mBinding.cbHomeBanner.visibility = View.VISIBLE
-                setupBannerView(banners)
+        mViewModel.observeBanners(activity!!) { data ->
+            if (data.second != null && data.second!!.isNotEmpty()) {
+                setupBannerView(data.first, data.second!!)
             }
         }
 
@@ -88,19 +86,19 @@ class HomeFragment : Fragment() {
         mViewModel.initHomeData()
     }
 
-    private fun setupBannerView(banners: List<BannerBean>) {
-        mBinding.cbHomeBanner.setPages(CBViewHolderCreator {
-            BannerImageHolderView()
-        }, banners)
-            .setPageIndicator(intArrayOf(R.mipmap.indicator_dot_normal, R.mipmap.indicator_dot_checked))
-            .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
-            .setOnItemClickListener { position ->
-                mViewModel.onBannerItemClick(position)
-            }
+    private fun setupBannerView(isRefresh: Boolean, banners: MutableList<BannerBean>) {
+        var bean = ArticleBean(viewType = 1)
+        bean.headerBanners = banners
+        if (mBinding.rvHomeArticles.adapter == null || isRefresh) {
+            var data = mutableListOf(bean)
+            mBinding.rvHomeArticles.adapter = ArticleListAdapter(activity!!, data)
+        } else {
+            (mBinding.rvHomeArticles.adapter as ArticleListAdapter).insert(0, bean)
+        }
     }
 
-    private fun setupArticleList(firstPage: Boolean, articles: MutableList<ArticleBean>?) {
-        if (firstPage) {
+    private fun setupArticleList(isRefresh: Boolean, articles: MutableList<ArticleBean>?) {
+        if (mBinding.rvHomeArticles.adapter == null || isRefresh) {
             mBinding.rvHomeArticles.adapter = ArticleListAdapter(activity!!, articles)
         } else {
             (mBinding.rvHomeArticles.adapter as ArticleListAdapter).appendData(articles)
