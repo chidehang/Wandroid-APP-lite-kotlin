@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/main_tab_home_selector"
+        android:title="@string/main_tab_home"/>
+
+    <item
+        android:id="@+id/navigation_category"
+        android:icon="@drawable/main_tab_category_selector"
+        android:title="@string/main_tab_category"/>
+
+    <item
+        android:id="@+id/navigation_mine"
+        android:icon="@drawable/main_tab_mine_selector"
+        android:title="@string/main_tab_mine"/>
+</menu>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3692f8</color>
+    <color name="colorPrimaryDark">#1461b7</color>
+    <color name="colorAccent">#3692f8</color>
+
+    <color name="grey_light">#ededed</color>
+    <color name="divider">#dcdcdc</color>
+
+    <color name="tab_label_normal">#999999</color>
+    <color name="tab_label_selected">#3692f8</color>
+</resources>
