@@ -8,15 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bigkoo.convenientbanner.ConvenientBanner
-import com.bigkoo.convenientbanner.holder.CBViewHolderCreator
 import com.cdh.wandroid.R
 import com.cdh.wandroid.databinding.FragmentHomeBinding
 import com.cdh.wandroid.model.bean.ArticleBean
 import com.cdh.wandroid.model.bean.BannerBean
-import com.cdh.wandroid.ui.adapter.ArticleListAdapter
-import com.cdh.wandroid.ui.adapter.BannerImageHolderView
-import com.cdh.wandroid.ui.adapter.base.BaseRecyclerAdapter
+import com.cdh.wandroid.ui.adapter.HomeListAdapter
 import com.cdh.wandroid.ui.widget.refresh.OnLoadMoreListener
 import com.cdh.wandroid.ui.widget.refresh.setRefreshListener
 
@@ -43,16 +39,6 @@ class HomeFragment : Fragment() {
         initView()
         initData()
         return mBinding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-//        mBinding.cbHomeBanner.startTurning(2000)
-    }
-
-    override fun onStop() {
-        super.onStop()
-//        mBinding.cbHomeBanner.stopTurning()
     }
 
     private fun initView() {
@@ -91,17 +77,17 @@ class HomeFragment : Fragment() {
         bean.headerBanners = banners
         if (mBinding.rvHomeArticles.adapter == null || isRefresh) {
             var data = mutableListOf(bean)
-            mBinding.rvHomeArticles.adapter = ArticleListAdapter(activity!!, data)
+            mBinding.rvHomeArticles.adapter = HomeListAdapter(activity!!, data)
         } else {
-            (mBinding.rvHomeArticles.adapter as ArticleListAdapter).insert(0, bean)
+            (mBinding.rvHomeArticles.adapter as HomeListAdapter).insert(0, bean)
         }
     }
 
     private fun setupArticleList(isRefresh: Boolean, articles: MutableList<ArticleBean>?) {
         if (mBinding.rvHomeArticles.adapter == null || isRefresh) {
-            mBinding.rvHomeArticles.adapter = ArticleListAdapter(activity!!, articles)
+            mBinding.rvHomeArticles.adapter = HomeListAdapter(activity!!, articles)
         } else {
-            (mBinding.rvHomeArticles.adapter as ArticleListAdapter).appendData(articles)
+            (mBinding.rvHomeArticles.adapter as HomeListAdapter).appendData(articles)
         }
     }
 }

@@ -9,11 +9,12 @@ import com.cdh.wandroid.model.bean.ArticleBean
 import com.cdh.wandroid.model.bean.BannerBean
 import com.cdh.wandroid.ui.adapter.base.BaseRecyclerAdapter
 import com.cdh.wandroid.ui.adapter.base.ViewHolder
+import com.cdh.wandroid.ui.widget.LifecycleBanner
 
 /**
  * Created by chidehang on 2020-01-04
  */
-class ArticleListAdapter(mContext: Context, mData: MutableList<ArticleBean>?) :
+class HomeListAdapter(mContext: Context, mData: MutableList<ArticleBean>?) :
     BaseRecyclerAdapter<ArticleBean>(mContext, mData) {
 
     private val HEADER_VIEW_TYPE = 1
@@ -34,11 +35,11 @@ class ArticleListAdapter(mContext: Context, mData: MutableList<ArticleBean>?) :
         }
 
         override fun onBind(holder: ViewHolder, item: ArticleBean, position: Int) {
-            var bannerView = holder.getView<ConvenientBanner<BannerBean>>(R.id.cb_home_banner)
+            var bannerView = holder.getView<LifecycleBanner<BannerBean>>(R.id.cb_home_banner)
             setupBannerView(bannerView!!, item.headerBanners!!)
         }
 
-        private fun setupBannerView(view: ConvenientBanner<BannerBean>, banners: MutableList<BannerBean>) {
+        private fun setupBannerView(view: LifecycleBanner<BannerBean>, banners: MutableList<BannerBean>) {
             view.setPages(CBViewHolderCreator {
                 BannerImageHolderView()
             }, banners)
