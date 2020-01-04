@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class BaseRecyclerAdapter<T>(
+open class BaseRecyclerAdapter<T>(
     protected var mContext: Context,
     protected var mData: MutableList<T>?
 ) : RecyclerView.Adapter<ViewHolder>() {
@@ -133,7 +133,7 @@ class BaseRecyclerAdapter<T>(
         fun getLayoutId(): Int
 
         fun onBind(
-            holder: ViewHolder?,
+            holder: ViewHolder,
             item: T,
             position: Int
         )

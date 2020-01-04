@@ -9,7 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 /**
  * Created by chidehang on 2020-01-03
  */
-fun RecyclerView.setRefreshListener(listener: OnRefreshListener) {
+fun RecyclerView.setRefreshListener(listener: OnLoadMoreListener) {
     addOnScrollListener(object: RecyclerView.OnScrollListener() {
         var lastVisiblePosition: Int = 0
         val parentLayout = this@setRefreshListener.parent
@@ -45,13 +45,6 @@ fun RecyclerView.setRefreshListener(listener: OnRefreshListener) {
             }
         }
     })
-
-    val swipeRefreshLayout = this.parent
-    if (swipeRefreshLayout is SwipeRefreshLayout) {
-        swipeRefreshLayout.setOnRefreshListener {
-            listener.onRefresh()
-        }
-    }
 }
 
 fun findMax(array: IntArray): Int {

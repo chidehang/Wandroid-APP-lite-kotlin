@@ -23,7 +23,7 @@ object RetrofitClient {
         }
 
         retrofit = Retrofit.Builder()
-            .baseUrl(ApiConstants.BASE_URL)
+            .baseUrl(ApiService.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okhttp)
             .build()

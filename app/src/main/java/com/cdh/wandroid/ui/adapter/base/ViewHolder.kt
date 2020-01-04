@@ -31,6 +31,12 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         return view as T?
     }
 
+    fun setText(viewId: Int, id: Int): ViewHolder {
+        val tv = getView<TextView>(viewId)!!
+        tv.text = mContext.getString(id)
+        return this
+    }
+
     fun setText(viewId: Int, text: String?): ViewHolder {
         val tv = getView<TextView>(viewId)!!
         tv.text = text

@@ -9,57 +9,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_home_thumb"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:padding="2dp"
-                android:layout_margin="@dimen/margin_common"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:src="@mipmap/ic_droid_thumb"
-                android:scaleType="centerCrop"/>
-
-            <TextView
-                android:id="@+id/tv_home_search_entry"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_margin="@dimen/margin_common"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/home_search_bg"
-                android:drawableLeft="@mipmap/ic_search"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                android:hint="@string/home_search_hint"
-                android:padding="6dp"
-                android:textColor="@android:color/black"
-                android:textSize="16dp"
-                app:layout_constraintLeft_toRightOf="@+id/iv_home_thumb"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.bigkoo.convenientbanner.ConvenientBanner
-                android:id="@+id/cb_home_banner"
-                android:visibility="gone"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_home_header"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="@dimen/margin_common"
-                app:layout_constraintTop_toBottomOf="@+id/tv_home_search_entry"
-                app:layout_constraintDimensionRatio="w,1:2"/>
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/iv_home_thumb"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="2dp"
+                    android:layout_margin="@dimen/margin_common"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:src="@mipmap/ic_droid_thumb"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/tv_home_search_entry"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_margin="@dimen/margin_common"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/home_search_bg"
+                    android:drawableLeft="@mipmap/ic_search"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/home_search_hint"
+                    android:padding="6dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="16dp"
+                    app:layout_constraintLeft_toRightOf="@+id/iv_home_thumb"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.bigkoo.convenientbanner.ConvenientBanner
+                    android:id="@+id/cb_home_banner"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_common"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_home_search_entry"
+                    app:layout_constraintDimensionRatio="w,1:2"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_home_articles"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="@dimen/margin_common"
-                app:layout_constraintTop_toBottomOf="@+id/cb_home_banner"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_common"/>
+        </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

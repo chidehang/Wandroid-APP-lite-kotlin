@@ -6,4 +6,5 @@
     <dimen name="status_bar_height">25dp</dimen>
     
     <dimen name="margin_common">8dp</dimen>
+    <dimen name="space_item_decor">6dp</dimen>
 </resources>

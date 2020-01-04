@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.cdh.wandroid.R
 import com.cdh.wandroid.databinding.ActivityMainBinding
 import com.cdh.wandroid.ui.adapter.MainNavPagerAdapter
+import com.cdh.wandroid.util.T
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         initView()
+        T.init(applicationContext)
     }
 
     private fun initView() {
@@ -64,6 +66,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragments = listOf(HomeFragment(), CategoryFragment(), MineFragment())
         binding.viewPagerMain.let {
+            it.isUserInputEnabled = false
             it.adapter = MainNavPagerAdapter(this, fragments)
             it.registerOnPageChangeCallback(onPageChangeCallback)
         }
