@@ -1,6 +1,7 @@
 package com.cdh.wandroid.network
 
 import com.cdh.wandroid.model.bean.BannerBean
+import com.cdh.wandroid.model.bean.CategoryBean
 import com.cdh.wandroid.model.bean.HomeArticlesInfo
 import com.cdh.wandroid.network.response.ArrayResponse
 import com.cdh.wandroid.network.response.ObjectResponse
@@ -17,6 +18,7 @@ interface ApiService {
 
         const val API_BANNER = "/banner/json"
         const val API_HOME_ARTICLES = "/article/list/{page}/json"
+        const val API_CATEGORY_TREE = "/tree/json"
     }
 
     @GET(API_BANNER)
@@ -24,4 +26,7 @@ interface ApiService {
 
     @GET(API_HOME_ARTICLES)
     suspend fun getHomeArticles(@Path("page") page: String): ObjectResponse<HomeArticlesInfo>
+
+    @GET(API_CATEGORY_TREE)
+    suspend fun getCategoryTree() : ArrayResponse<CategoryBean>
 }
