@@ -30,7 +30,10 @@ class CustomWebViewClient(private val mWebTitleBar: WebTitleBar?, private val mE
                 view.loadUrl(url)
             } else {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                if (view.context is Activity && null != intent.resolveActivity(view.context.applicationContext.packageManager)) {
+                if (null != intent.resolveActivity(view.context.applicationContext.packageManager)) {
+                    if (view.context !is Activity) {
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
                     view.context.startActivity(intent)
                 }
             }
