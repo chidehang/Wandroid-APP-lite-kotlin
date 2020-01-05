@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_root"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <com.cdh.wandroid.ui.widget.webview.view.WebTitleBar
+        android:id="@+id/web_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"/>
+
+    <com.cdh.wandroid.ui.widget.webview.view.WebViewComponent
+        android:id="@+id/web_view"
+        android:layout_marginTop="46dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/web_error_page"
+        android:layout_marginTop="46dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/err_view_container"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/refresh_img"
+                android:src="@mipmap/ic_common_network_reload"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/refresh_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="8dp"
+                android:text="@string/webview_error"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

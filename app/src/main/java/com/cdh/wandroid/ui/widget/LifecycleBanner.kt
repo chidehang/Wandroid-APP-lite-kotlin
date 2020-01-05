@@ -26,7 +26,7 @@ class LifecycleBanner<T> : ConvenientBanner<T> {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        startTurning(2000)
+        startTurning(3000)
     }
 
     override fun onDetachedFromWindow() {

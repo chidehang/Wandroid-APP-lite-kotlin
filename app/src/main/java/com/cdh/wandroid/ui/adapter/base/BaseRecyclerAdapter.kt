@@ -11,6 +11,7 @@ open class BaseRecyclerAdapter<T>(
     protected var mContext: Context,
     protected var mData: MutableList<T>?
 ) : RecyclerView.Adapter<ViewHolder>() {
+
     protected var mInflater: LayoutInflater
     protected var mViewBinders: SparseArray<IViewBinder<T>>
     protected var onItemClickListener: OnRecyclerItemClickListener? = null

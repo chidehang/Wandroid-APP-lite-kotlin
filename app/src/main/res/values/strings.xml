@@ -11,4 +11,6 @@
     <string name="article_share_label">分享：</string>
     <string name="article_classify_label">分类：</string>
     <string name="article_date_label">时间：</string>
+
+    <string name="webview_error">网络错误，点击重新加载</string>
 </resources>

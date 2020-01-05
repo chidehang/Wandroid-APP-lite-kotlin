@@ -2,6 +2,7 @@ package com.cdh.wandroid.ui.adapter
 
 import android.content.Context
 import android.text.TextUtils
+import android.view.View
 import com.bigkoo.convenientbanner.ConvenientBanner
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator
 import com.cdh.wandroid.R
@@ -18,6 +19,8 @@ class HomeListAdapter(mContext: Context, mData: MutableList<ArticleBean>?) :
     BaseRecyclerAdapter<ArticleBean>(mContext, mData) {
 
     private val HEADER_VIEW_TYPE = 1
+
+    private var onClickListener: OnHomeModuleClickListener ?= null
 
     init {
         putItemLayoutId(iViewBinder = ArticleViewBinder())
@@ -37,6 +40,12 @@ class HomeListAdapter(mContext: Context, mData: MutableList<ArticleBean>?) :
         override fun onBind(holder: ViewHolder, item: ArticleBean, position: Int) {
             var bannerView = holder.getView<LifecycleBanner<BannerBean>>(R.id.cb_home_banner)
             setupBannerView(bannerView!!, item.headerBanners!!)
+
+            holder.getView<View>(R.id.tv_home_search_entry)?.setOnClickListener { _ ->
+                onClickListener?.let {
+                    it.onSearchClick()
+                }
+            }
         }
 
         private fun setupBannerView(view: LifecycleBanner<BannerBean>, banners: MutableList<BannerBean>) {
@@ -46,7 +55,9 @@ class HomeListAdapter(mContext: Context, mData: MutableList<ArticleBean>?) :
                 .setPageIndicator(intArrayOf(R.mipmap.indicator_dot_normal, R.mipmap.indicator_dot_checked))
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setOnItemClickListener { position ->
-
+                    onClickListener?.let {
+                        it.onBannerClick(banners[position], position)
+                    }
                 }
         }
     }
@@ -68,6 +79,22 @@ class HomeListAdapter(mContext: Context, mData: MutableList<ArticleBean>?) :
                 holder.setText(R.id.tv_article_item_author_label, R.string.article_author_label)
                 holder.setText(R.id.tv_article_item_author, item.author)
             }
+
+            onClickListener?.let {
+                holder.itemView.setOnClickListener { _ ->
+                    it.onArticleClick(item, position-1)
+                }
+            }
         }
+    }
+
+    fun setOnHomeModuleClickListener(listener: OnHomeModuleClickListener) {
+        this.onClickListener = listener
+    }
+
+    interface OnHomeModuleClickListener {
+        fun onSearchClick()
+        fun onBannerClick(item: BannerBean, indexOfBanners: Int)
+        fun onArticleClick(item: ArticleBean, indexOfArticles: Int)
     }
 }

@@ -15,11 +15,13 @@ import com.cdh.wandroid.model.bean.BannerBean
 import com.cdh.wandroid.ui.adapter.HomeListAdapter
 import com.cdh.wandroid.ui.widget.refresh.OnLoadMoreListener
 import com.cdh.wandroid.ui.widget.refresh.setRefreshListener
+import com.cdh.wandroid.ui.widget.webview.WebLauncher
+import com.cdh.wandroid.util.T
 
 /**
  * Created by chidehang on 2020-01-01
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeListAdapter.OnHomeModuleClickListener {
 
     private lateinit var mBinding: FragmentHomeBinding
 
@@ -77,7 +79,7 @@ class HomeFragment : Fragment() {
         bean.headerBanners = banners
         if (mBinding.rvHomeArticles.adapter == null || isRefresh) {
             var data = mutableListOf(bean)
-            mBinding.rvHomeArticles.adapter = HomeListAdapter(activity!!, data)
+            mBinding.rvHomeArticles.adapter = createHomeListAdapter(data)
         } else {
             (mBinding.rvHomeArticles.adapter as HomeListAdapter).insert(0, bean)
         }
@@ -85,9 +87,29 @@ class HomeFragment : Fragment() {
 
     private fun setupArticleList(isRefresh: Boolean, articles: MutableList<ArticleBean>?) {
         if (mBinding.rvHomeArticles.adapter == null || isRefresh) {
-            mBinding.rvHomeArticles.adapter = HomeListAdapter(activity!!, articles)
+            mBinding.rvHomeArticles.adapter = createHomeListAdapter(articles)
         } else {
             (mBinding.rvHomeArticles.adapter as HomeListAdapter).appendData(articles)
         }
+    }
+
+    private fun createHomeListAdapter(data: MutableList<ArticleBean>?): HomeListAdapter {
+        var adapter = HomeListAdapter(activity!!, data)
+        adapter.setOnHomeModuleClickListener(this)
+        return adapter
+    }
+
+    override fun onSearchClick() {
+        T.showShort("onSearchClick")
+    }
+
+    override fun onBannerClick(item: BannerBean, indexOfBanners: Int) {
+        val url = item.url
+        WebLauncher.launchWeb(activity, url)
+    }
+
+    override fun onArticleClick(item: ArticleBean, indexOfArticles: Int) {
+        val url = item.link
+        WebLauncher.launchWeb(activity, url)
     }
 }
