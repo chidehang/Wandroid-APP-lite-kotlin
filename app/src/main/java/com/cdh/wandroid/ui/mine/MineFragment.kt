@@ -1,4 +1,4 @@
-package com.cdh.wandroid.ui
+package com.cdh.wandroid.ui.mine
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 /**
- * Created by chidehang on 2020-01-05
+ * Created by chidehang on 2020-01-01
  */
-class CategoryContentFragment: Fragment() {
+class MineFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

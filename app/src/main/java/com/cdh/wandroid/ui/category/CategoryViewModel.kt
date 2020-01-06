@@ -1,10 +1,6 @@
-package com.cdh.wandroid.ui
+package com.cdh.wandroid.ui.category
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.cdh.wandroid.model.CategoryRepository
 import com.cdh.wandroid.model.bean.CategoryBean
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +13,9 @@ class CategoryViewModel : ViewModel() {
 
     private val _showLoading = MutableLiveData<Boolean>()
     private val _loadSucceed = MutableLiveData<Boolean>()
-    private val _allCatagory = MutableLiveData<MutableList<CategoryBean>>()
+    private val _allCategory = MutableLiveData<MutableList<CategoryBean>>()
+
+    val allCategory: LiveData<MutableList<CategoryBean>> = _allCategory
 
     private val _categoryRepository = CategoryRepository()
 
@@ -33,19 +31,13 @@ class CategoryViewModel : ViewModel() {
         })
     }
 
-    fun observeAllCategory(owner: LifecycleOwner, block: (MutableList<CategoryBean>) -> Unit) {
-        _allCatagory.observe(owner, Observer { data ->
-            block.invoke(data)
-        })
-    }
-
     fun loadAllCategory() = viewModelScope.launch(Dispatchers.IO) {
         _showLoading.postValue(true)
         var result = _categoryRepository.getCategoryTree()
         _showLoading.postValue(false)
         if (result.isOk()) {
             _loadSucceed.postValue(true)
-            _allCatagory.postValue(result.getResponse()?.data)
+            _allCategory.postValue(result.getResponse()?.data)
         } else {
             _loadSucceed.postValue(false)
         }

@@ -29,6 +29,7 @@
                     app:tabMode="scrollable"/>
 
                 <ImageView
+                    android:id="@+id/iv_category_more"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:padding="3dp"
@@ -36,6 +37,13 @@
                     android:layout_marginRight="@dimen/margin_common"
                     android:src="@mipmap/ic_more"/>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/margin_common"
+                android:layout_marginRight="@dimen/margin_common"
+                android:background="@color/divider"/>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_category_two_level"

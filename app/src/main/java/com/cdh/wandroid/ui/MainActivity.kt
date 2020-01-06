@@ -1,17 +1,14 @@
 package com.cdh.wandroid.ui
 
-import android.graphics.Color
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.cdh.wandroid.R
 import com.cdh.wandroid.databinding.ActivityMainBinding
 import com.cdh.wandroid.ui.adapter.MainNavPagerAdapter
+import com.cdh.wandroid.ui.category.CategoryFragment
+import com.cdh.wandroid.ui.home.HomeFragment
+import com.cdh.wandroid.ui.mine.MineFragment
 import com.cdh.wandroid.util.T
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -67,7 +64,10 @@ class MainActivity : BaseActivity() {
 
         binding.bottomNavMain.setOnNavigationItemSelectedListener(onNavItemSelectedListener)
 
-        val fragments = listOf(HomeFragment(), CategoryFragment(), MineFragment())
+        val fragments = listOf(HomeFragment(),
+            CategoryFragment(),
+            MineFragment()
+        )
         binding.viewPagerMain.let {
             it.isUserInputEnabled = false
             it.adapter = MainNavPagerAdapter(this, fragments)

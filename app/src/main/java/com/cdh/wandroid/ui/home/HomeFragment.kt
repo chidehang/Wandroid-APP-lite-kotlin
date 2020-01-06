@@ -1,4 +1,4 @@
-package com.cdh.wandroid.ui
+package com.cdh.wandroid.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.cdh.wandroid.ui.widget.FlowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/flow_category_picker"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin_common"
+    android:background="@drawable/common_dialog_background">
+
+</com.cdh.wandroid.ui.widget.FlowLayout>

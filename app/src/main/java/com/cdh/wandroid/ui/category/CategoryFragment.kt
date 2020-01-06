@@ -1,16 +1,22 @@
-package com.cdh.wandroid.ui
+package com.cdh.wandroid.ui.category
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
+import androidx.core.widget.PopupWindowCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.cdh.wandroid.R
 import com.cdh.wandroid.databinding.FragmentCategoryBinding
 import com.cdh.wandroid.model.bean.CategoryBean
+import com.cdh.wandroid.ui.adapter.MainNavPagerAdapter
+import com.cdh.wandroid.ui.widget.CategoryPickerDialog
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 /**
  * Created by chidehang on 2020-01-01
@@ -18,6 +24,8 @@ import com.google.android.material.tabs.TabLayout
 class CategoryFragment : Fragment(), View.OnClickListener {
 
     private lateinit var mBinding: FragmentCategoryBinding
+
+    private var mCategoryPicker: CategoryPickerDialog?= null
 
     private val mViewModel by lazy {
         ViewModelProviders.of(activity!!).get(CategoryViewModel::class.java)
@@ -34,12 +42,10 @@ class CategoryFragment : Fragment(), View.OnClickListener {
         return mBinding.root
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        TabLayoutMediator(mBinding.tabsCategoryTwoLevel, mBinding.vpCategoryArticles) { tab, position ->
-//            tab.text = "tab ${position}"
-//        }.attach()
-//    }
+    override fun onPause() {
+        super.onPause()
+        mCategoryPicker?.dismiss()
+    }
 
     private fun initView() {
         mBinding.clCategoryError.setOnClickListener(this)
@@ -55,6 +61,8 @@ class CategoryFragment : Fragment(), View.OnClickListener {
                 setupTwoTabLayout((tab.tag as CategoryBean).children)
             }
         })
+
+        mBinding.ivCategoryMore.setOnClickListener(this)
     }
 
     private fun initData() {
@@ -72,16 +80,18 @@ class CategoryFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        mViewModel.observeAllCategory(this) { data ->
-            if (data.isNotEmpty()) {
-                setupOneTabLayout(data)
-            }
-        }
+        mViewModel.allCategory.observe(this, Observer { data ->
+            setupOneTabLayout(data)
+        })
 
         mViewModel.loadAllCategory()
     }
 
     private fun setupOneTabLayout(data: MutableList<CategoryBean>) {
+        if (data.isEmpty()) {
+            return
+        }
+
         mBinding.tabsCategoryOneLevel.removeAllTabs()
         data.forEach {
             mBinding.tabsCategoryOneLevel.addTab(
@@ -90,19 +100,20 @@ class CategoryFragment : Fragment(), View.OnClickListener {
                     .setTag(it)
             )
         }
-
-        setupTwoTabLayout(data[0].children)
     }
 
     private fun setupTwoTabLayout(data: MutableList<CategoryBean>) {
-        mBinding.tabsCategoryTwoLevel.removeAllTabs()
-        data.forEach {
-            mBinding.tabsCategoryTwoLevel.addTab(
-                mBinding.tabsCategoryTwoLevel.newTab()
-                    .setText(it.name)
-                    .setTag(it)
-            )
+        if (data.isEmpty()) {
+            return
         }
+
+        val fragments = MutableList<Fragment>(data.size) { index ->
+            CategoryContentFragment.createInstance(data[index].id)
+        }
+        mBinding.vpCategoryArticles.adapter = MainNavPagerAdapter(activity!!, fragments)
+        TabLayoutMediator(mBinding.tabsCategoryTwoLevel, mBinding.vpCategoryArticles) { tab, position ->
+            tab.text = data[position].name
+        }.attach()
     }
 
     override fun onClick(v: View?) {
@@ -110,6 +121,26 @@ class CategoryFragment : Fragment(), View.OnClickListener {
             R.id.cl_category_error -> {
                 mViewModel.loadAllCategory()
             }
+            R.id.iv_category_more -> {
+                mCategoryPicker?.updateCheckedCategory(mBinding.tabsCategoryOneLevel.selectedTabPosition)
+                showCategoryPickerDialog()
+            }
         }
+    }
+
+    private fun showCategoryPickerDialog() {
+        if (mViewModel.allCategory.value == null || mViewModel.allCategory.value!!.isEmpty()) {
+            return
+        }
+
+        if (mCategoryPicker == null) {
+            mCategoryPicker = CategoryPickerDialog.createInstance(mViewModel.allCategory.value!!)
+            mCategoryPicker?.setOnPickListener(object: CategoryPickerDialog.OnPickListener{
+                override fun onPicked(position: Int) {
+                    mBinding.tabsCategoryOneLevel.getTabAt(position)?.select()
+                }
+            })
+        }
+        mCategoryPicker?.show(childFragmentManager, CategoryPickerDialog.TAG)
     }
 }

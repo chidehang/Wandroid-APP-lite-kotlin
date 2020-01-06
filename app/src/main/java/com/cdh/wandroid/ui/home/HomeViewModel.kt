@@ -1,8 +1,8 @@
-package com.cdh.wandroid.ui
+package com.cdh.wandroid.ui.home
 
 import androidx.lifecycle.*
 import com.cdh.wandroid.model.BannerRepository
-import com.cdh.wandroid.model.HomeArticlesRepository
+import com.cdh.wandroid.model.ArticlesRepository
 import com.cdh.wandroid.model.bean.ArticleBean
 import com.cdh.wandroid.model.bean.BannerBean
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ class HomeViewModel : ViewModel() {
     private val _articles = MutableLiveData<Pair<Boolean, MutableList<ArticleBean>?>>()
 
     private val _bannerRepository = BannerRepository()
-    private val _articlesRepository = HomeArticlesRepository()
+    private val _articlesRepository = ArticlesRepository()
 
     @Volatile
     private var pageNo = 1
@@ -52,32 +52,31 @@ class HomeViewModel : ViewModel() {
 
     private fun loadBannerList() = viewModelScope.launch(Dispatchers.IO) {
         val result = _bannerRepository.getBannerData()
-        var pair = Pair(isRefreshData(), result.getResponse()?.data)
-        _banners.postValue(pair)
+        if (result.isOk()) {
+            var pair = Pair(isRefreshData(), result.getResponse()?.data)
+            _banners.postValue(pair)
+        }
     }
 
     private fun loadArticleList() = viewModelScope.launch(Dispatchers.IO) {
         pageNo = 0
-        val result = _articlesRepository.getArticleData(pageNo)
+        val result = _articlesRepository.getHomeArticles(pageNo)
         _refreshable.postValue(false)
-        var pair = Pair(isRefreshData(), result.getResponse()?.data?.datas)
-        _articles.postValue(pair)
+        if (result.isOk()) {
+            var pair = Pair(isRefreshData(), result.getResponse()?.data?.datas)
+            _articles.postValue(pair)
+        }
     }
 
     fun loadMoreArticles() = viewModelScope.launch(Dispatchers.IO) {
         val oldPageNo = pageNo
-        val result = _articlesRepository.getArticleData(pageNo++)
+        val result = _articlesRepository.getHomeArticles(++pageNo)
         if (result.isOk()) {
             var pair = Pair(isRefreshData(), result.getResponse()?.data?.datas)
             _articles.postValue(pair)
         } else {
             pageNo = oldPageNo
         }
-    }
-
-    fun onBannerItemClick(position: Int) {
-        var banner = _banners.value?.second?.get(position)
-
     }
 
     private fun isRefreshData(): Boolean {

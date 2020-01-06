@@ -14,7 +14,7 @@ open class BaseRecyclerAdapter<T>(
 
     protected var mInflater: LayoutInflater
     protected var mViewBinders: SparseArray<IViewBinder<T>>
-    protected var onItemClickListener: OnRecyclerItemClickListener? = null
+    protected var onItemClickListener: OnRecyclerItemClickListener<T>? = null
 
     /**
      * 添加item布局id及对应布局处理器
@@ -118,14 +118,14 @@ open class BaseRecyclerAdapter<T>(
         }
     }
 
-    fun setOnRecyclerItemClickListener(listener: OnRecyclerItemClickListener?) {
+    fun setOnRecyclerItemClickListener(listener: OnRecyclerItemClickListener<T>?) {
         onItemClickListener = listener
     }
 
-    interface OnRecyclerItemClickListener {
+    interface OnRecyclerItemClickListener<T> {
         fun onRecyclerItemClicked(
-            adapter: BaseRecyclerAdapter<*>?,
-            view: View?,
+            adapter: BaseRecyclerAdapter<T>,
+            view: View,
             position: Int
         )
     }
