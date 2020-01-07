@@ -1,6 +1,8 @@
 package com.cdh.wandroid.network
 
 import com.cdh.wandroid.BuildConfig
+import com.cdh.wandroid.network.intercept.AddCookiesInterceptor
+import com.cdh.wandroid.network.intercept.ReceiveCookiesInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,7 +21,11 @@ object RetrofitClient {
         if (BuildConfig.DEBUG) {
             var loggin = HttpLoggingInterceptor()
             loggin.setLevel(HttpLoggingInterceptor.Level.BODY)
-            okhttp = OkHttpClient.Builder().addInterceptor(loggin).build()
+            okhttp = OkHttpClient.Builder()
+                .addInterceptor(AddCookiesInterceptor())
+                .addInterceptor(ReceiveCookiesInterceptor())
+                .addInterceptor(loggin)
+                .build()
         }
 
         retrofit = Retrofit.Builder()

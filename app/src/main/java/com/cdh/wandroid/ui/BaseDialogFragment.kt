@@ -26,6 +26,8 @@ abstract class BaseDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        initWindowAttr()
+
         if (rootView != null) {
             val parent = rootView!!.parent as ViewGroup
             parent.removeView(rootView)
@@ -33,7 +35,6 @@ abstract class BaseDialogFragment : DialogFragment() {
         }
 
         rootView = initView(inflater, container, savedInstanceState)
-        initWindowAttr()
         return rootView
     }
 

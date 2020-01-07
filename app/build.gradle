@@ -63,4 +63,6 @@ dependencies {
     implementation 'com.squareup.okio:okio:1.17.4'
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    // 过度滚动容器
+    implementation 'me.everything:overscroll-decor-android:1.0.4'
 }

@@ -9,9 +9,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_home_articles"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_home_articles"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <include
+                android:id="@+id/include_home_error"
+                android:visibility="visible"
+                layout="@layout/layout_loading_error" />
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/progress_home_loading"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                style="?android:attr/progressBarStyleSmall"/>
+        </FrameLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

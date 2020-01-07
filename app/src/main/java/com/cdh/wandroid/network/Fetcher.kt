@@ -14,10 +14,10 @@ class Fetcher {
             var result = ApiResult<T>()
             try {
                 var response = block.invoke()
-                if (response.resultCode == ApiResult.SUCCEED_CODE) {
+                if (response.errorCode == ApiResult.SUCCEED_CODE) {
                     result.succeed(response)
                 } else {
-                    result.error(ApiException(response.resultCode, response.resultMsg))
+                    result.error(ApiException(response.errorCode, response.errorMsg))
                 }
             } catch (e: Throwable) {
                 LogUtils.printStackTrace(e)

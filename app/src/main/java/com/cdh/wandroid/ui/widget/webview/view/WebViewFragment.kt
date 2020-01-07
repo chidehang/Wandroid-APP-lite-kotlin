@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.CookieManager
+import android.webkit.CookieSyncManager
 import androidx.fragment.app.Fragment
 import com.cdh.wandroid.R
 import com.cdh.wandroid.ui.widget.webview.callback.CustomWebChromeClient
@@ -41,6 +43,7 @@ class WebViewFragment : Fragment() {
         initView()
         initListener()
         setWebClient()
+        setCookies()
         mWebView!!.loadUrl(arguments!!.getString(URL))
         return mRoot
     }
@@ -80,6 +83,11 @@ class WebViewFragment : Fragment() {
         mWebView!!.webViewClient = CustomWebViewClient(mWebTitleBar, mErrorView)
         mWebView!!.webChromeClient = CustomWebChromeClient(mWebTitleBar)
         mWebView!!.setDownloadListener(CustomWebDownloadListener(activity!!))
+    }
+
+    private fun setCookies() {
+        CookieManager.getInstance().setAcceptCookie(true)
+        CookieManager.getInstance().setAcceptThirdPartyCookies(mWebView, true)
     }
 
     override fun onResume() {

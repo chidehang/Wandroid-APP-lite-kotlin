@@ -13,12 +13,21 @@ import kotlinx.coroutines.launch
  */
 class HomeViewModel : ViewModel() {
 
+    private val _hideError = MutableLiveData<Boolean>()
+    private val _showProgress = MutableLiveData<Boolean>()
+
     private val _refreshable = MutableLiveData<Boolean>()
     private val _banners = MutableLiveData<Pair<Boolean, MutableList<BannerBean>?>>()
     private val _articles = MutableLiveData<Pair<Boolean, MutableList<ArticleBean>?>>()
 
+    val hideError: LiveData<Boolean> = _hideError
+    val showProgress: LiveData<Boolean> = _showProgress
+
     private val _bannerRepository = BannerRepository()
     private val _articlesRepository = ArticlesRepository()
+
+    @Volatile
+    private var initialLoad = true
 
     @Volatile
     private var pageNo = 1
@@ -46,6 +55,9 @@ class HomeViewModel : ViewModel() {
 
     fun initHomeData() {
         refreshData = true
+        if (initialLoad) {
+            _showProgress.value = true
+        }
         loadBannerList()
         loadArticleList()
     }
@@ -53,9 +65,12 @@ class HomeViewModel : ViewModel() {
     private fun loadBannerList() = viewModelScope.launch(Dispatchers.IO) {
         val result = _bannerRepository.getBannerData()
         if (result.isOk()) {
+            initialLoad = false
+            _hideError.postValue(true)
             var pair = Pair(isRefreshData(), result.getResponse()?.data)
             _banners.postValue(pair)
         }
+        _showProgress.postValue(false)
     }
 
     private fun loadArticleList() = viewModelScope.launch(Dispatchers.IO) {
@@ -63,9 +78,12 @@ class HomeViewModel : ViewModel() {
         val result = _articlesRepository.getHomeArticles(pageNo)
         _refreshable.postValue(false)
         if (result.isOk()) {
+            initialLoad = false
+            _hideError.postValue(true)
             var pair = Pair(isRefreshData(), result.getResponse()?.data?.datas)
             _articles.postValue(pair)
         }
+        _showProgress.postValue(false)
     }
 
     fun loadMoreArticles() = viewModelScope.launch(Dispatchers.IO) {
@@ -77,6 +95,10 @@ class HomeViewModel : ViewModel() {
         } else {
             pageNo = oldPageNo
         }
+    }
+
+    private fun handleInitialLoad() {
+
     }
 
     private fun isRefreshData(): Boolean {

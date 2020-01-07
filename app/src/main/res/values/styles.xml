@@ -13,4 +13,10 @@
         <item name="android:windowIsFloating">true</item>
     </style>
 
+    <style name="CommonButtonTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:background">@drawable/btn_common_bg</item>
+    </style>
 </resources>

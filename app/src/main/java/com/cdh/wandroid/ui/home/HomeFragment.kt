@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cdh.wandroid.R
@@ -54,6 +55,10 @@ class HomeFragment : Fragment(), HomeListAdapter.OnHomeModuleClickListener {
                 mViewModel.loadMoreArticles()
             }
         })
+
+        mBinding.includeHomeError.clLoadingError.setOnClickListener {
+            mViewModel.initHomeData()
+        }
     }
 
     private fun initData() {
@@ -70,6 +75,18 @@ class HomeFragment : Fragment(), HomeListAdapter.OnHomeModuleClickListener {
         mViewModel.observeArticles(activity!!) { data ->
             setupArticleList(data.first, data.second)
         }
+
+        mViewModel.hideError.observe(activity!!, Observer { hide ->
+            mBinding.includeHomeError.clLoadingError.visibility = View.GONE
+        })
+
+        mViewModel.showProgress.observe(activity!!, Observer { show ->
+            if (show) {
+                mBinding.progressHomeLoading.show()
+            } else {
+                mBinding.progressHomeLoading.hide()
+            }
+        })
 
         mViewModel.initHomeData()
     }

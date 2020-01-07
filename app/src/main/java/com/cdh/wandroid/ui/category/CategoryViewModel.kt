@@ -15,6 +15,8 @@ class CategoryViewModel : ViewModel() {
     private val _loadSucceed = MutableLiveData<Boolean>()
     private val _allCategory = MutableLiveData<MutableList<CategoryBean>>()
 
+    val loadSucceed: LiveData<Boolean> = _loadSucceed
+
     val allCategory: LiveData<MutableList<CategoryBean>> = _allCategory
 
     private val _categoryRepository = CategoryRepository()
@@ -22,12 +24,6 @@ class CategoryViewModel : ViewModel() {
     fun observeLoding(owner: LifecycleOwner, block: (Boolean) -> Unit) {
         _showLoading.observe(owner, Observer { enable ->
             block.invoke(enable)
-        })
-    }
-
-    fun observeLoadError(owner: LifecycleOwner, block: (Boolean) -> Unit) {
-        _loadSucceed.observe(owner, Observer { succeed ->
-            block.invoke(succeed)
         })
     }
 

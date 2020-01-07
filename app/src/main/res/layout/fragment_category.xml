@@ -57,37 +57,9 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_category_error"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/iv_category_error_tip"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/tv_category_error_tip"
-                app:layout_constraintVertical_chainStyle="packed"
-                android:src="@mipmap/ic_common_network_reload"/>
-
-            <TextView
-                android:id="@+id/tv_category_error_tip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_category_error_tip"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"
-                android:textSize="16dp"
-                android:textColor="@color/secondary_text_dark"
-                android:text="@string/loading_retry"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/include_category_error"
+            layout="@layout/layout_loading_error" />
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/progress_category_loading"

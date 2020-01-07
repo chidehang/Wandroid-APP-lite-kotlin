@@ -3,19 +3,22 @@ package com.cdh.wandroid.ui
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.cdh.wandroid.util.ProgressDialogUtil
 
 /**
  * Created by chidehang on 2020-01-05
  */
 open class BaseActivity: AppCompatActivity() {
 
+    private var mProgressDialog: ProgressDialogUtil ?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initStatusBar()
+        mProgressDialog = ProgressDialogUtil()
     }
 
     protected fun initStatusBar() {
@@ -30,8 +33,21 @@ open class BaseActivity: AppCompatActivity() {
 
     protected fun setSpecialColorStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            window.statusBarColor = Color.parseColor("#fffafafa")
+            window.statusBarColor = Color.parseColor("#ffffffff")
             window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mProgressDialog?.dismissProgressDlg()
+    }
+
+    protected fun showProgress(msg: String) {
+        mProgressDialog?.showProgressDlg(this, msg)
+    }
+
+    protected fun dismissProgress() {
+        mProgressDialog?.dismissProgressDlg()
     }
 }

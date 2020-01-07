@@ -48,7 +48,7 @@ class CategoryFragment : Fragment(), View.OnClickListener {
     }
 
     private fun initView() {
-        mBinding.clCategoryError.setOnClickListener(this)
+        mBinding.includeCategoryError.clLoadingError.setOnClickListener(this)
 
         mBinding.tabsCategoryOneLevel.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -70,15 +70,15 @@ class CategoryFragment : Fragment(), View.OnClickListener {
             if (enable) mBinding.progressCategoryLoading.show() else mBinding.progressCategoryLoading.hide()
         }
 
-        mViewModel.observeLoadError(this) { succeed ->
+        mViewModel.loadSucceed.observe(this, Observer { succeed ->
             if (succeed) {
                 mBinding.llCategoryContainer.visibility = View.VISIBLE
-                mBinding.clCategoryError.visibility = View.GONE
+                mBinding.includeCategoryError.clLoadingError.visibility = View.GONE
             } else {
                 mBinding.llCategoryContainer.visibility = View.GONE
-                mBinding.clCategoryError.visibility = View.VISIBLE
+                mBinding.includeCategoryError.clLoadingError.visibility = View.VISIBLE
             }
-        }
+        })
 
         mViewModel.allCategory.observe(this, Observer { data ->
             setupOneTabLayout(data)
@@ -118,7 +118,7 @@ class CategoryFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.cl_category_error -> {
+            R.id.include_category_error -> {
                 mViewModel.loadAllCategory()
             }
             R.id.iv_category_more -> {

@@ -13,5 +13,22 @@
     <string name="article_date_label">时间：</string>
 
     <string name="webview_error">网络错误，点击重新加载</string>
-    <string name="loading_retry">点击重试</string>
+    <string name="loading_retry">点击加载</string>
+
+    <string name="mine_favorite_label">我的收藏</string>
+    <string name="mine_setting_label">设置</string>
+
+    <string name="mine_login_first_tip">请先登录</string>
+
+    <string name="login_title">登录</string>
+    <string name="login_username_hint">用户名</string>
+    <string name="login_password_hint">密码</string>
+    <string name="login_new_register">新用户注册</string>
+    <string name="login_retrieve_password">忘记密码</string>
+    <string name="login_username_illegal">用户名不合法</string>
+    <string name="login_password_illegal">密码不合法</string>
+
+    <string name="register_title">注册</string>
+    <string name="register_repassword_hint">确认密码</string>
+    <string name="register_repassword_illegal">确认密码不一致</string>
 </resources>
