@@ -9,100 +9,109 @@
     android:layout_marginRight="@dimen/margin_common"
     android:foreground="?android:attr/selectableItemBackground">
 
-    <LinearLayout
+    <com.cdh.wandroid.ui.widget.SlideMenuLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content" >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_common">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@id/slide_foreground_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/margin_common"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:id="@+id/tv_article_item_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_text_dark"
+                    android:text="title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_article_item_author_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_common"
+                    android:text="@string/article_author_label"
+                    android:textColor="@color/secondary_text_dark"
+                    android:textSize="11dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_article_item_title" />
+
+                <TextView
+                    android:id="@+id/tv_article_item_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_common"
+                    android:textColor="@color/primary_text_dark"
+                    android:textSize="11dp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_article_item_author_label"
+                    app:layout_constraintStart_toEndOf="@+id/tv_article_item_author_label"/>
+
+                <TextView
+                    android:id="@+id/tv_article_item_classify_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_common"
+                    android:layout_marginLeft="@dimen/margin_common"
+                    android:textColor="@color/secondary_text_dark"
+                    android:textSize="11dp"
+                    android:text="@string/article_classify_label"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_article_item_author"
+                    app:layout_constraintStart_toEndOf="@+id/tv_article_item_author"/>
+
+                <TextView
+                    android:id="@+id/tv_article_item_classify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_common"
+                    android:textColor="@color/primary_text_dark"
+                    android:textSize="11dp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_article_item_classify_label"
+                    app:layout_constraintStart_toEndOf="@+id/tv_article_item_classify_label"/>
+
+                <TextView
+                    android:id="@+id/tv_article_item_date_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_common"
+                    android:layout_marginLeft="@dimen/margin_common"
+                    android:textColor="@color/secondary_text_dark"
+                    android:textSize="11dp"
+                    android:text="@string/article_date_label"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_article_item_classify"
+                    app:layout_constraintStart_toEndOf="@+id/tv_article_item_classify"/>
+
+                <TextView
+                    android:id="@+id/tv_article_item_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_common"
+                    android:textColor="@color/primary_text_dark"
+                    android:textSize="11dp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_article_item_date_label"
+                    app:layout_constraintStart_toEndOf="@+id/tv_article_item_date_label"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tv_article_item_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                android:textColor="@color/primary_text_dark"
-                android:text="title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <TextView
-                android:id="@+id/tv_article_item_author_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_common"
-                android:text="@string/article_author_label"
-                android:textColor="@color/secondary_text_dark"
-                android:textSize="11dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_article_item_title" />
-
-            <TextView
-                android:id="@+id/tv_article_item_author"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_common"
-                android:textColor="@color/primary_text_dark"
-                android:textSize="11dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_article_item_author_label"
-                app:layout_constraintStart_toEndOf="@+id/tv_article_item_author_label"/>
-
-            <TextView
-                android:id="@+id/tv_article_item_classify_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_common"
-                android:layout_marginLeft="@dimen/margin_common"
-                android:textColor="@color/secondary_text_dark"
-                android:textSize="11dp"
-                android:text="@string/article_classify_label"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_article_item_author"
-                app:layout_constraintStart_toEndOf="@+id/tv_article_item_author"/>
-
-            <TextView
-                android:id="@+id/tv_article_item_classify"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_common"
-                android:textColor="@color/primary_text_dark"
-                android:textSize="11dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_article_item_classify_label"
-                app:layout_constraintStart_toEndOf="@+id/tv_article_item_classify_label"/>
-
-            <TextView
-                android:id="@+id/tv_article_item_date_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_common"
-                android:layout_marginLeft="@dimen/margin_common"
-                android:textColor="@color/secondary_text_dark"
-                android:textSize="11dp"
-                android:text="@string/article_date_label"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_article_item_classify"
-                app:layout_constraintStart_toEndOf="@+id/tv_article_item_classify"/>
-
-            <TextView
-                android:id="@+id/tv_article_item_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_common"
-                android:textColor="@color/primary_text_dark"
-                android:textSize="11dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_article_item_date_label"
-                app:layout_constraintStart_toEndOf="@+id/tv_article_item_date_label"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@id/swipe_item_menu"
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:text="取消收藏"
-            android:background="@android:color/holo_red_light"/>
-    </LinearLayout>
+                android:id="@id/slide_background_content"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:text="取消收藏"
+                android:background="@android:color/holo_red_light"/>
+        </LinearLayout>
+    </com.cdh.wandroid.ui.widget.SlideMenuLayout>
 </androidx.cardview.widget.CardView>

@@ -6,14 +6,15 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cdh.wandroid.R
 import com.cdh.wandroid.databinding.ActivityMyFavoriteBinding
 import com.cdh.wandroid.model.bean.ArticleBean
+import com.cdh.wandroid.ui.BaseActivity
 import com.cdh.wandroid.ui.adapter.FavoriteArticlesAdapter
+import com.cdh.wandroid.ui.adapter.OnFavoriteListItemClick
 import com.cdh.wandroid.ui.adapter.base.BaseRecyclerAdapter
-import com.cdh.wandroid.ui.widget.SwipeItemTouchCallback
+import com.cdh.wandroid.ui.adapter.base.ViewHolder
 import com.cdh.wandroid.ui.widget.refresh.OnLoadMoreListener
 import com.cdh.wandroid.ui.widget.refresh.setRefreshListener
 import com.cdh.wandroid.ui.widget.webview.From
@@ -21,7 +22,7 @@ import com.cdh.wandroid.ui.widget.webview.WebLauncher
 import com.cdh.wandroid.ui.widget.webview.WebParams
 import com.cdh.wandroid.util.T
 
-class MyFavoriteActivity : AppCompatActivity() {
+class MyFavoriteActivity : BaseActivity() {
 
     private val mViewModel by lazy {
         ViewModelProviders.of(this).get(MyFavoriteViewModel::class.java)
@@ -49,10 +50,6 @@ class MyFavoriteActivity : AppCompatActivity() {
             }
         })
 
-        val touchCallback = SwipeItemTouchCallback()
-        val itemTouchHelper = ItemTouchHelper(touchCallback)
-        itemTouchHelper.attachToRecyclerView(mBinding.rvFavoriteArticles)
-
         mBinding.swipeRefreshFavorite.setOnRefreshListener {
             mViewModel.loadFirstData()
         }
@@ -70,6 +67,18 @@ class MyFavoriteActivity : AppCompatActivity() {
         mViewModel.toastTips.observe(this, Observer { tips ->
             T.showShort(tips)
         })
+
+        mViewModel.showProgress.observe(this, Observer { show ->
+            if (show) {
+                showProgress("")
+            } else {
+                dismissProgress()
+            }
+        })
+
+        mViewModel.uncollectItem.observe(this, Observer { item ->
+            (mBinding.rvFavoriteArticles.adapter as FavoriteArticlesAdapter).remove(item)
+        })
     }
 
     override fun onStart() {
@@ -86,8 +95,16 @@ class MyFavoriteActivity : AppCompatActivity() {
                     view: View,
                     position: Int
                 ) {
-                    var item = adapter.data!![position]
-                    var url = item.link
+
+                }
+            })
+            adapter.setOnFavoriteListItemClick(object: OnFavoriteListItemClick {
+                override fun onForegroundClicked(
+                    holder: ViewHolder,
+                    item: ArticleBean,
+                    position: Int
+                ) {
+                    val url = item.link
                     val params = WebParams(
                         selfId = item.id,
                         articleId = item.originId,
@@ -97,6 +114,15 @@ class MyFavoriteActivity : AppCompatActivity() {
                     )
                     WebLauncher.launchWeb(this@MyFavoriteActivity, url, params)
                 }
+
+                override fun onBackgroundClicked(
+                    holder: ViewHolder,
+                    item: ArticleBean,
+                    position: Int
+                ) {
+                    mViewModel.uncollect(item)
+                }
+
             })
             mBinding.rvFavoriteArticles.adapter = adapter
         } else {

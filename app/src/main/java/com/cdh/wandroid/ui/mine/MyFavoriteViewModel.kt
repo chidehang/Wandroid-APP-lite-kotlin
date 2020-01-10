@@ -19,6 +19,9 @@ class MyFavoriteViewModel : ViewModel() {
     private val _toastTips = MutableLiveData<String>()
     val toastTips: LiveData<String> = _toastTips
 
+    private val _showProgress = MutableLiveData<Boolean>()
+    val showProgress: LiveData<Boolean> = _showProgress
+
     private val _showError = MutableLiveData<Boolean>(false)
     val showError: LiveData<Boolean> = _showError
 
@@ -27,6 +30,9 @@ class MyFavoriteViewModel : ViewModel() {
 
     private val _articles = MutableLiveData<Pair<Boolean, MutableList<ArticleBean>>>()
     val articles: LiveData<Pair<Boolean, MutableList<ArticleBean>>> = _articles
+
+    private val _uncollectItem = MutableLiveData<ArticleBean>()
+    val uncollectItem: LiveData<ArticleBean> = _uncollectItem
 
     private var pageNo = 0
 
@@ -50,7 +56,7 @@ class MyFavoriteViewModel : ViewModel() {
         _showError.postValue(true)
     }
 
-    fun loadMoreData() =viewModelScope.launch(Dispatchers.IO) {
+    fun loadMoreData() = viewModelScope.launch(Dispatchers.IO) {
         var oldPage = pageNo
         var result = favoriteRepository.getMyFavoriteArticles(++pageNo)
         if (result.isOk()) {
@@ -61,6 +67,17 @@ class MyFavoriteViewModel : ViewModel() {
         } else {
             pageNo = oldPage
             _toastTips.postValue(result.getError().msg)
+        }
+    }
+
+    fun uncollect(article: ArticleBean) = viewModelScope.launch(Dispatchers.IO) {
+        _showProgress.postValue(true)
+        var result = favoriteRepository.uncollect(article.id, article.originId, true)
+        _showProgress.postValue(false)
+        if (result.isOk()) {
+            _uncollectItem.postValue(article)
+        } else {
+            _toastTips.postValue("收藏失败")
         }
     }
 }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="swipe_item_menu" type="id" />
+    <item name="slide_foreground_content" type="id" />
+    <item name="slide_background_content" type="id" />
 </resources>
