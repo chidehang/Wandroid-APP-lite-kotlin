@@ -2,6 +2,10 @@ package com.cdh.wandroid.network.intercept
 
 import com.cdh.wandroid.model.CookieManager
 import com.cdh.wandroid.network.ApiService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -16,7 +20,7 @@ class ReceiveCookiesInterceptor : Interceptor {
         if (list != null && list.isNotEmpty()) {
             var cookie = ""
             for (str in list) {
-                cookie += str
+                cookie += "$str; "
             }
             CookieManager.putCookie(ApiService.BASE_URL, cookie)
         }

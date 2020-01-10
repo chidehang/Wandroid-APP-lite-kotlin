@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.cdh.wandroid.ui.mine.SettingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.cdh.wandroid.ui.widget.CommonTitleBar
+            android:id="@+id/title_bar_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_setting_logo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toBottomOf="@+id/title_bar_setting"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="30dp"
+            android:src="@mipmap/app_logo"/>
+
+        <TextView
+            android:id="@+id/tv_setting_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/iv_setting_logo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/secondary_text_dark"
+            android:text="@{viewModel.appVersion}"
+            tools:text="version"/>
+
+        <LinearLayout
+            android:id="@+id/ll_setting_about"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_setting_version"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/border_up_bottom_layout_layer">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/ic_about_me" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:textSize="16dp"
+                android:textColor="@color/secondary_text_dark"
+                android:text="@string/setting_about_me"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:drawablePadding="5dp"
+                android:drawableEnd="@mipmap/arrow_right"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setting_git_link"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            app:layout_constraintTop_toBottomOf="@+id/ll_setting_about"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/border_up_bottom_layout_layer">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/ic_git_link" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:textSize="16dp"
+                android:textColor="@color/secondary_text_dark"
+                android:text="@string/setting_git_link"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:drawablePadding="5dp"
+                android:drawableEnd="@mipmap/arrow_right"/>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_logout"
+            android:visibility="@{viewModel.isLoggedIn()? View.VISIBLE : View.GONE}"
+            style="@style/CommonButtonTheme"
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="30dp"
+            android:text="@string/logout_label"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

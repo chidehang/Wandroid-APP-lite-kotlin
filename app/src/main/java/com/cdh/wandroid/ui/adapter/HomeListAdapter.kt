@@ -1,6 +1,7 @@
 package com.cdh.wandroid.ui.adapter
 
 import android.content.Context
+import android.text.Html
 import android.text.TextUtils
 import android.view.View
 import com.bigkoo.convenientbanner.ConvenientBanner
@@ -69,7 +70,7 @@ class HomeListAdapter(mContext: Context, mData: MutableList<ArticleBean>?) :
         }
 
         override fun onBind(holder: ViewHolder, item: ArticleBean, position: Int) {
-            holder.setText(R.id.tv_article_item_title, item.title)
+            holder.setText(R.id.tv_article_item_title, Html.fromHtml(item.title))
             holder.setText(R.id.tv_article_item_classify, item.superChapterName + "/" + item.chapterName)
             holder.setText(R.id.tv_article_item_date, item.niceShareDate)
             if (TextUtils.isEmpty(item.author)) {

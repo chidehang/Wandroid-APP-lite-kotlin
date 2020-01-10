@@ -17,7 +17,9 @@ import com.cdh.wandroid.ui.adapter.CategoryArticlesAdapter
 import com.cdh.wandroid.ui.adapter.base.BaseRecyclerAdapter
 import com.cdh.wandroid.ui.widget.refresh.OnLoadMoreListener
 import com.cdh.wandroid.ui.widget.refresh.setRefreshListener
+import com.cdh.wandroid.ui.widget.webview.From
 import com.cdh.wandroid.ui.widget.webview.WebLauncher
+import com.cdh.wandroid.ui.widget.webview.WebParams
 
 /**
  * Created by chidehang on 2020-01-05
@@ -81,8 +83,15 @@ class CategoryContentFragment: Fragment() {
                     view: View,
                     position: Int
                 ) {
-                    var url = adapter.data?.get(position)?.link
-                    WebLauncher.launchWeb(activity, url)
+                    val item = adapter.data!![position]
+                    val params = WebParams(
+                        selfId = item.id,
+                        articleId = item.id,
+                        enableCollect = true,
+                        collectState = item.collect,
+                        from = From.ARTICLE
+                    )
+                    WebLauncher.launchWeb(activity, item.link, params)
                 }
             })
             mBinding.rvCategoryContent.adapter = adapter

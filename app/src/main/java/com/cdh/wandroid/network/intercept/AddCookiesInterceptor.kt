@@ -2,6 +2,7 @@ package com.cdh.wandroid.network.intercept
 
 import com.cdh.wandroid.model.CookieManager
 import com.cdh.wandroid.network.ApiService
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -12,7 +13,7 @@ class AddCookiesInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         var cookie = CookieManager.getCookie(ApiService.BASE_URL)
-        if (cookie != null && cookie.isNotEmpty()) {
+        if (cookie != null && cookie!!.isNotEmpty()) {
             var newRequest = chain.request().newBuilder().header("Cookie", cookie).build()
             return chain.proceed(newRequest)
         }

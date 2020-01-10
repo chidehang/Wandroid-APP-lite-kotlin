@@ -14,6 +14,7 @@
 
     <string name="webview_error">网络错误，点击重新加载</string>
     <string name="loading_retry">点击加载</string>
+    <string name="emoty_data">暂无数据</string>
 
     <string name="mine_favorite_label">我的收藏</string>
     <string name="mine_setting_label">设置</string>
@@ -31,4 +32,16 @@
     <string name="register_title">注册</string>
     <string name="register_repassword_hint">确认密码</string>
     <string name="register_repassword_illegal">确认密码不一致</string>
+
+    <string name="setting_about_me">关于作者</string>
+    <string name="setting_git_link">源码地址</string>
+    <string name="logout_label">退出登录</string>
+
+    <string name="search_title">搜索</string>
+    <string name="search_input_hint">请输入搜索关键字</string>
+    <string name="search_hot_key">热门搜索</string>
+    <string name="search_history_key">历史搜索</string>
+    <string name="search_clear_keys">清除记录</string>
+
+    <string name="coming_soon">敬请期待～</string>
 </resources>

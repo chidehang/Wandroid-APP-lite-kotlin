@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.cdh.wandroid.R
 import com.cdh.wandroid.databinding.FragmentMineBinding
 import com.cdh.wandroid.ui.account.LoginActivity
+import com.cdh.wandroid.util.T
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 
 /**
@@ -42,6 +42,11 @@ class MineFragment : Fragment(), View.OnClickListener {
         return mBinding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        mViewModel.updateUserName()
+    }
+
     private fun initView() {
         OverScrollDecoratorHelper.setUpOverScroll(mBinding.svMineRoot)
 
@@ -51,6 +56,7 @@ class MineFragment : Fragment(), View.OnClickListener {
     }
 
     private fun initData() {
+
     }
 
     override fun onClick(v: View?) {
@@ -64,15 +70,11 @@ class MineFragment : Fragment(), View.OnClickListener {
                 if (!mViewModel.isLoggedIn()) {
                     startActivity(Intent(activity, LoginActivity::class.java))
                 } else {
-
+                    startActivity(Intent(activity, MyFavoriteActivity::class.java))
                 }
             }
             R.id.ll_mine_setting -> {
-                if (!mViewModel.isLoggedIn()) {
-                    startActivity(Intent(activity, LoginActivity::class.java))
-                } else {
-
-                }
+                startActivity(Intent(activity, SettingActivity::class.java))
             }
         }
     }

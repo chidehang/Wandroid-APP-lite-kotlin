@@ -1,65 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="46dp"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
-        android:id="@+id/linear_title"
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.cdh.wandroid.ui.widget.webview.view.WebViewModel" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:orientation="horizontal"
-        android:background="#ffffff">
+        android:layout_height="46dp"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/image_back_h5"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:src="@mipmap/web_ic_top_left_black_arrow"
-            android:background="@null"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="14dp"
-            android:layout_centerVertical="true"
-            android:scaleType="centerInside"/>
+        <RelativeLayout
+            android:id="@+id/linear_title"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="horizontal"
+            android:background="#ffffff">
 
-        <ImageButton
-            android:id="@+id/image_close_h5"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/image_back_h5"
-            android:background="@null"
-            android:scaleType="centerInside"
-            android:src="@mipmap/web_ic_top_left_black_close"
+            <ImageButton
+                android:id="@+id/image_back_h5"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:src="@mipmap/web_ic_top_left_black_arrow"
+                android:background="@null"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="14dp"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"/>
+
+            <ImageButton
+                android:id="@+id/image_close_h5"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/image_back_h5"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@mipmap/web_ic_top_left_black_close"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                tools:text="标题"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxEms="9"/>
+
+            <ImageButton
+                android:id="@+id/image_collect_h5"
+                android:visibility="@{viewModel.enableCollect? View.VISIBLE : View.GONE}"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="14dp"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                app:collectIcon="@{viewModel.collectStatus}"/>
+
+            <ProgressBar
+                android:id="@+id/image_loading_h5"
+                android:visibility="@{viewModel.loading? View.VISIBLE : View.GONE}"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="14dp"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop" />
+        </RelativeLayout>
+
+        <!-- 进度条 -->
+        <ProgressBar
+            android:id="@+id/pb_web"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:progressDrawable="@drawable/web_webview_progress_style"
             android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            tools:text="标题"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxEms="9"/>
-
-    </RelativeLayout>
-
-    <!-- 进度条 -->
-    <ProgressBar
-        android:id="@+id/pb_web"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_alignParentBottom="true"
-        android:progressDrawable="@drawable/web_webview_progress_style"
-        android:visibility="gone"/>
-
-</LinearLayout>
+    </LinearLayout>
+</layout>

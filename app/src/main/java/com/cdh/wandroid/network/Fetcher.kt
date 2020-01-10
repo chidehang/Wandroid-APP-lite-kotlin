@@ -1,5 +1,6 @@
 package com.cdh.wandroid.network
 
+import com.cdh.wandroid.model.AccountRepository
 import com.cdh.wandroid.network.response.ApiResult
 import com.cdh.wandroid.network.response.BaseResponse
 import com.cdh.wandroid.util.LogUtils
@@ -17,6 +18,9 @@ class Fetcher {
                 if (response.errorCode == ApiResult.SUCCEED_CODE) {
                     result.succeed(response)
                 } else {
+                    if (response.errorCode == ApiResult.NEED_LOGIN_CODE) {
+                        AccountRepository.clearLocalAccount()
+                    }
                     result.error(ApiException(response.errorCode, response.errorMsg))
                 }
             } catch (e: Throwable) {

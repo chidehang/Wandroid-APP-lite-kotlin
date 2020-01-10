@@ -1,5 +1,6 @@
 package com.cdh.wandroid.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,9 @@ import com.cdh.wandroid.model.bean.BannerBean
 import com.cdh.wandroid.ui.adapter.HomeListAdapter
 import com.cdh.wandroid.ui.widget.refresh.OnLoadMoreListener
 import com.cdh.wandroid.ui.widget.refresh.setRefreshListener
+import com.cdh.wandroid.ui.widget.webview.From
 import com.cdh.wandroid.ui.widget.webview.WebLauncher
+import com.cdh.wandroid.ui.widget.webview.WebParams
 import com.cdh.wandroid.util.T
 
 /**
@@ -117,16 +120,21 @@ class HomeFragment : Fragment(), HomeListAdapter.OnHomeModuleClickListener {
     }
 
     override fun onSearchClick() {
-        T.showShort("onSearchClick")
+        startActivity(Intent(activity, SearchActivity::class.java))
     }
 
     override fun onBannerClick(item: BannerBean, indexOfBanners: Int) {
-        val url = item.url
-        WebLauncher.launchWeb(activity, url)
+        WebLauncher.launchWeb(activity, item.url)
     }
 
     override fun onArticleClick(item: ArticleBean, indexOfArticles: Int) {
-        val url = item.link
-        WebLauncher.launchWeb(activity, url)
+        val params = WebParams(
+            selfId = item.id,
+            articleId = item.id,
+            enableCollect = true,
+            collectState = item.collect,
+            from = From.ARTICLE
+        )
+        WebLauncher.launchWeb(activity, item.link, params)
     }
 }

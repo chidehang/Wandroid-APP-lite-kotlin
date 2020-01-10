@@ -2,19 +2,16 @@ package com.cdh.wandroid.ui.adapter
 
 import android.content.Context
 import android.text.Html
-import android.text.Spannable
-import android.text.Spanned
 import android.text.TextUtils
 import com.cdh.wandroid.R
 import com.cdh.wandroid.model.bean.ArticleBean
 import com.cdh.wandroid.ui.adapter.base.BaseRecyclerAdapter
 import com.cdh.wandroid.ui.adapter.base.ViewHolder
-import com.cdh.wandroid.ui.widget.webview.WebLauncher
 
 /**
- * Created by chidehang on 2020-01-06
+ * Created by chidehang on 2020-01-09
  */
-class CategoryArticlesAdapter(context: Context, data: MutableList<ArticleBean>?) :
+class FavoriteArticlesAdapter(context: Context, data: MutableList<ArticleBean>?) :
     BaseRecyclerAdapter<ArticleBean>(context, data) {
 
     init {
@@ -24,7 +21,7 @@ class CategoryArticlesAdapter(context: Context, data: MutableList<ArticleBean>?)
     inner class ArticleViewBinder : IViewBinder<ArticleBean> {
 
         override fun getLayoutId(): Int {
-            return R.layout.item_article_summary
+            return R.layout.item_favorite_article
         }
 
         override fun onBind(holder: ViewHolder, item: ArticleBean, position: Int) {

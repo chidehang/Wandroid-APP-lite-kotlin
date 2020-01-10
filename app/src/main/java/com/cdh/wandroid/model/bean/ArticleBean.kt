@@ -20,6 +20,7 @@ data class ArticleBean(
     val niceDate: String = "",
     val niceShareDate: String = "",
     val origin: String = "",
+    val originId: Int = -1,
     val prefix: String = "",
     val projectLink: String = "",
     val publishTime: Long = 0,

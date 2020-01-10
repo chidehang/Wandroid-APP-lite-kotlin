@@ -2,8 +2,10 @@ package com.cdh.wandroid.ui.widget.webview.view
 
 import android.os.Bundle
 import android.view.View
+import com.cdh.wandroid.ArgumentConstants
 import com.cdh.wandroid.R
 import com.cdh.wandroid.ui.widget.webview.WebLauncher
+import com.cdh.wandroid.ui.widget.webview.WebParams
 
 /**
  * 浏览器Activity：用于打开H5页面
@@ -21,7 +23,8 @@ class WebViewActivity : BaseWebViewActivity() {
             .add(
                 R.id.frame_root,
                 WebViewFragment.getInstance(
-                    intent.getStringExtra(WebLauncher.WEB_URL)
+                    intent.getStringExtra(WebLauncher.WEB_URL),
+                    intent.getSerializableExtra(ArgumentConstants.EXTRA_WEB_PARAMS) as WebParams?
                 ),
                 WebViewFragment.TAG
             )

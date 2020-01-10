@@ -1,10 +1,12 @@
 package com.cdh.wandroid.ui
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.cdh.wandroid.util.ProgressDialogUtil
 
@@ -42,6 +44,7 @@ open class BaseActivity: AppCompatActivity() {
         super.onDestroy()
         mProgressDialog?.dismissProgressDlg()
     }
+
 
     protected fun showProgress(msg: String) {
         mProgressDialog?.showProgressDlg(this, msg)

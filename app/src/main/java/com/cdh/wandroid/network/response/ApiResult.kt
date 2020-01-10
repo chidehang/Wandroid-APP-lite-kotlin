@@ -36,5 +36,6 @@ class ApiResult<T: BaseResponse> {
     companion object {
         const val SUCCEED_CODE = 0
         const val UNKNOWN_ERROR_CODE = -1
+        const val NEED_LOGIN_CODE = -1001
     }
 }

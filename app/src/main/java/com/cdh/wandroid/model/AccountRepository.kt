@@ -1,6 +1,10 @@
 package com.cdh.wandroid.model
 
+import com.cdh.wandroid.WandroidApp
 import com.cdh.wandroid.model.bean.AccountBean
+import com.cdh.wandroid.model.db.AccountDao
+import com.cdh.wandroid.model.db.WandroidRoomDatabase
+import com.cdh.wandroid.network.ApiService
 import com.cdh.wandroid.network.Fetcher
 import com.cdh.wandroid.network.RetrofitClient
 import com.cdh.wandroid.network.response.ApiResult
@@ -11,7 +15,10 @@ import com.cdh.wandroid.network.response.ObjectResponse
  */
 object AccountRepository {
 
+    @Volatile
     private var accountBean: AccountBean ?= null
+
+    private val accountDao = WandroidRoomDatabase.getDatabase(WandroidApp.applicationContext!!).accountDao()
 
     suspend fun login(username: String, password: String): ApiResult<ObjectResponse<AccountBean>> {
         var result = Fetcher.fetch {
@@ -21,6 +28,9 @@ object AccountRepository {
 
         if (result.isOk()) {
             accountBean = result.getResponse()?.data
+            if (accountBean != null) {
+                accountDao.insert(accountBean!!)
+            }
         }
 
         return result
@@ -33,11 +43,30 @@ object AccountRepository {
         }
     }
 
+    suspend fun getAccountInfo(): AccountBean? {
+        if (accountBean == null) {
+            var beans = accountDao.getAccount()
+            if (beans.isNotEmpty()) {
+                accountBean = accountDao.getAccount()[0]
+            }
+        }
+        return accountBean
+    }
+
     fun isLoggedIn(): Boolean {
         return accountBean != null
     }
 
-    fun getAccountInfo(): AccountBean? {
-        return accountBean
+    suspend fun logout() {
+        Fetcher.fetch {
+            RetrofitClient.getApi().logout()
+        }
+        clearLocalAccount()
+    }
+
+    suspend fun clearLocalAccount() {
+        accountDao.deleteAll()
+        accountBean = null
+        CookieManager.removeCookie(ApiService.BASE_URL)
     }
 }
