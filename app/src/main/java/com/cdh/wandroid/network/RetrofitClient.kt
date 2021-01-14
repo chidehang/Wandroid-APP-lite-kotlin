@@ -17,7 +17,7 @@ object RetrofitClient {
     private var api: ApiService ?= null
 
     init {
-        var okhttp = OkHttpClient()
+        var okhttp = OkHttpClient.Builder().build()
         if (BuildConfig.DEBUG) {
             var loggin = HttpLoggingInterceptor()
             loggin.setLevel(HttpLoggingInterceptor.Level.BODY)
